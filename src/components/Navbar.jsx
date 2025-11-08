@@ -31,6 +31,7 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-8 text-sm text-white/80">
           <button onClick={goHome} className="hover:text-white transition">Accueil</button>
+          <button onClick={() => goTo('#/portfolio')} className="hover:text-white transition">Portfolio</button>
           <button onClick={() => goTo('#offres')} className="hover:text-white transition">Offres</button>
           <button onClick={() => goTo('#contact')} className="hover:text-white transition">Contact</button>
         </div>
@@ -44,6 +45,7 @@ export default function Navbar() {
         <div className="md:hidden bg-black/80 border-t border-white/10">
           <div className="px-6 py-4 flex flex-col gap-4 text-white/90">
             <button onClick={goHome}>Accueil</button>
+            <button onClick={() => goTo('#/portfolio')}>Portfolio</button>
             <button onClick={() => goTo('#offres')}>Offres</button>
             <button onClick={() => goTo('#contact')}>Contact</button>
           </div>

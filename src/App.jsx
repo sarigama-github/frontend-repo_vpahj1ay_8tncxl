@@ -4,6 +4,10 @@ import Hero from './components/Hero';
 import Packages from './components/Packages';
 import Footer from './components/Footer';
 import PackageDetail from './components/PackageDetail';
+import PortfolioHero from './components/PortfolioHero';
+import ProjectGrid from './components/ProjectGrid';
+import PortfolioAbout from './components/PortfolioAbout';
+import PortfolioCTA from './components/PortfolioCTA';
 
 function useHashRoute() {
   const [hash, setHash] = useState(() => window.location.hash || '');
@@ -24,12 +28,21 @@ export default function App() {
   }, [hash]);
 
   const isDetail = slug === 'onepage' || slug === 'vitrine' || slug === 'ecommerce';
+  const isPortfolio = slug === 'portfolio';
 
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
 
-      {isDetail ? (
+      {isPortfolio ? (
+        <>
+          <PortfolioHero />
+          <ProjectGrid />
+          <PortfolioAbout />
+          <PortfolioCTA />
+          <Footer />
+        </>
+      ) : isDetail ? (
         <PackageDetail slug={slug} />
       ) : (
         <>
