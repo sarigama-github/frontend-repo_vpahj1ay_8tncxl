@@ -1,29 +1,54 @@
-import React from 'react';
-import { Rocket } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
 
-const Navbar = () => {
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const goHome = () => {
+    window.location.hash = '';
+    setOpen(false);
+  };
+
+  const goTo = (hash) => {
+    window.location.hash = hash;
+    setOpen(false);
+  };
+
   return (
-    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/50 border-b border-slate-200/60">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 grid place-items-center text-white shadow-lg">
-            <Rocket size={18} />
-          </div>
-          <span className="font-semibold tracking-tight">BlueForge Studio</span>
+    <header className={`fixed top-0 inset-x-0 z-50 transition-all ${scrolled ? 'backdrop-blur bg-black/40 border-b border-white/10' : 'bg-transparent'}`}>
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <button onClick={goHome} className="flex items-center gap-2">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500" />
+          <span className="font-semibold text-white">Studio Web</span>
+        </button>
+
+        <div className="hidden md:flex items-center gap-8 text-sm text-white/80">
+          <button onClick={goHome} className="hover:text-white transition">Accueil</button>
+          <button onClick={() => goTo('#offres')} className="hover:text-white transition">Offres</button>
+          <button onClick={() => goTo('#contact')} className="hover:text-white transition">Contact</button>
         </div>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm text-slate-600">
-          <a href="#services" className="hover:text-slate-900 transition">Services</a>
-          <a href="#process" className="hover:text-slate-900 transition">Process</a>
-          <a href="#contact" className="hover:text-slate-900 transition">Contact</a>
-        </nav>
+        <button className="md:hidden text-white" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
+          {open ? <X /> : <Menu />}
+        </button>
+      </nav>
 
-        <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-white px-4 py-2 text-sm shadow hover:shadow-md transition">
-          Démarrer
-        </a>
-      </div>
+      {open && (
+        <div className="md:hidden bg-black/80 border-t border-white/10">
+          <div className="px-6 py-4 flex flex-col gap-4 text-white/90">
+            <button onClick={goHome}>Accueil</button>
+            <button onClick={() => goTo('#offres')}>Offres</button>
+            <button onClick={() => goTo('#contact')}>Contact</button>
+          </div>
+        </div>
+      )}
     </header>
   );
-};
-
-export default Navbar;
+}

@@ -1,81 +1,75 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { Layout, MonitorSmartphone, ShoppingBag, Check } from 'lucide-react';
+import { Rocket, Layout, ShoppingBag } from 'lucide-react';
 
-const plans = [
+const packages = [
   {
-    id: 'onepage',
-    title: 'Site Onepage',
+    slug: 'onepage',
+    title: 'Onepage',
+    desc: 'Une page unique impactante, idéale pour lancer rapidement votre présence.',
+    icon: Rocket,
+    features: ['Section héro animée', '3 blocs de contenu', 'Formulaire de contact', 'Optimisé mobile'],
+  },
+  {
+    slug: 'vitrine',
+    title: 'Vitrine',
+    desc: 'Un site multi‑pages élégant pour présenter votre activité en détail.',
     icon: Layout,
-    price: 'à partir de 690€',
-    desc: "Un site unique et percutant sur une page pour présenter l'essentiel.",
-    features: ['Design sur‑mesure', 'Section contact', 'Optimisé mobile', 'Animations fluides'],
-    color: 'from-cyan-400 to-blue-500',
+    features: ['Jusqu’à 6 pages', 'Blog/Actualités', 'Animations avancées', 'SEO de base'],
   },
   {
-    id: 'vitrine',
-    title: 'Site Vitrine',
-    icon: MonitorSmartphone,
-    price: 'à partir de 1290€',
-    desc: 'Présentez votre activité avec plusieurs pages, blog et formulaires.',
-    features: ['5‑8 pages', 'Blog/Actualités', 'SEO de base', 'Hébergement & domaine'],
-    color: 'from-blue-500 to-indigo-600',
-  },
-  {
-    id: 'ecommerce',
-    title: 'Site E‑commerce',
+    slug: 'ecommerce',
+    title: 'E‑commerce',
+    desc: 'Une boutique performante pour vendre en ligne avec confiance.',
     icon: ShoppingBag,
-    price: 'à partir de 2490€',
-    desc: 'Vendez en ligne avec un catalogue, panier et paiement sécurisé.',
-    features: ['Catalogue & Panier', 'Paiement sécurisé', 'Gestion commandes', 'Suivi & analytics'],
-    color: 'from-indigo-600 to-violet-600',
+    features: ['Catalogue produits', 'Paiements sécurisés', 'Panier et commande', 'Suivi analytics'],
   },
 ];
 
-const Packages = () => {
+export default function Packages() {
   return (
-    <section id="services" className="relative bg-gradient-to-b from-slate-50 to-white py-24 text-slate-900">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight">Nos offres</h2>
-          <p className="mt-3 text-slate-600">Trois formules claires pour lancer votre projet rapidement.</p>
+    <section id="offres" className="relative py-20 bg-black">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Nos offres</h2>
+          <p className="mt-2 text-white/70">Choisissez la formule adaptée à vos objectifs.</p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {plans.map((plan, i) => (
-            <motion.div
-              key={plan.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-lg transition-shadow"
-            >
-              <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${plan.color} text-white grid place-items-center shadow-md`}>
-                {React.createElement(plan.icon, { size: 22 })}
-              </div>
-              <h3 className="mt-5 text-xl font-semibold tracking-tight">{plan.title}</h3>
-              <p className="mt-2 text-sm text-slate-600">{plan.desc}</p>
-              <div className="mt-4 text-sm font-medium text-slate-900">{plan.price}</div>
-              <ul className="mt-6 space-y-2">
-                {plan.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-slate-700">
-                    <span className="h-5 w-5 rounded-full bg-slate-100 text-cyan-600 grid place-items-center">
-                      <Check size={14} />
-                    </span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <a href="#contact" className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 text-white py-2.5 text-sm font-medium hover:bg-slate-800">
-                Demander un devis
-              </a>
-            </motion.div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {packages.map((p, idx) => {
+            const Icon = p.icon;
+            return (
+              <motion.div
+                key={p.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 flex flex-col"
+              >
+                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center text-white mb-4">
+                  <Icon />
+                </div>
+                <h3 className="text-xl font-semibold text-white">{p.title}</h3>
+                <p className="mt-2 text-white/70">{p.desc}</p>
+                <ul className="mt-4 space-y-2 text-sm text-white/70">
+                  {p.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={`#/${p.slug}`}
+                  className="mt-6 inline-flex justify-center items-center px-4 py-2 rounded-lg bg-white text-black font-medium hover:bg-white/90 transition"
+                >
+                  Voir les détails
+                </a>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
-};
-
-export default Packages;
+}
